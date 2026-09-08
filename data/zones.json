@@ -1,0 +1,61 @@
+[
+  {
+    "id": "magic-island",
+    "nameTh": "เมจิก ไอส์แลนด์",
+    "nameEn": "Magic Island",
+    "descTh": "หัวใจของสวนน้ำและกิจกรรมกลางแจ้ง สระว่ายน้ำธีมเกาะมหัศจรรย์ พร้อมฟิตเนสและไซเลนต์ดิสโก้",
+    "descEn": "The heart of the water gardens — a themed island pool with fitness facilities and silent disco nights.",
+    "cover": "zone-magic-island-cover.jpg",
+    "buildings": ["D", "E", "F"],
+    "map": { "x": 12, "y": 50 }
+  },
+  {
+    "id": "healing-zone",
+    "nameTh": "ฮีลลิ่ง โซน",
+    "nameEn": "Healing Zone",
+    "descTh": "พื้นที่ผ่อนคลายและบำบัดจิตใจ สปา ห้องพักผ่อน และมุมความคิดสร้างสรรค์",
+    "descEn": "A relaxation-focused zone with a spa, quiet lounges, and a dedicated thinking space.",
+    "cover": "zone-healing-zone-cover.jpg",
+    "buildings": ["C", "G"],
+    "map": { "x": 33, "y": 50 }
+  },
+  {
+    "id": "futuristic-world",
+    "nameTh": "ฟิวเจอริสติก เวิลด์",
+    "nameEn": "Futuristic World",
+    "descTh": "โซนเกมมิ่งและกิจกรรมล้ำสมัย ตู้เกมอาเขต สนามยิงเลเซอร์แท็ก และห้องจำลอง VR กอล์ฟ",
+    "descEn": "A gaming and next-gen activity zone — arcade games, laser tag, and VR golf simulation.",
+    "cover": "zone-futuristic-world-cover.jpg",
+    "buildings": ["G", "H"],
+    "map": { "x": 50, "y": 50 }
+  },
+  {
+    "id": "theme-park",
+    "nameTh": "ธีม พาร์ค",
+    "nameEn": "Theme Park",
+    "descTh": "โซนแห่งความบันเทิงและสุขภาพ รวมสตูดิโอสร้างสรรค์ โรงภาพยนตร์ส่วนตัว และฟิตเนสครบครัน",
+    "descEn": "An entertainment-and-wellness zone with creative studios, a private theater, and a full fitness center.",
+    "cover": "zone-theme-park-cover.jpg",
+    "buildings": ["B", "H", "I"],
+    "map": { "x": 67, "y": 50 }
+  },
+  {
+    "id": "mix-forest",
+    "nameTh": "มิกซ์ ฟอเรสต์",
+    "nameEn": "Mix Forest",
+    "descTh": "โซนต้อนรับหลักของโครงการ ร่มรื่นด้วยสวนป่าและสระน้ำ พร้อมล็อบบี้แกรนด์และมุมสังสรรค์ยามค่ำคืน",
+    "descEn": "The project's main arrival zone — a lush garden setting with the Grand Lobby and evening social spots.",
+    "cover": "zone-mix-forest-cover.jpg",
+    "buildings": ["A", "B"],
+    "map": { "x": 88, "y": 50 }
+  },
+  {
+    "id": "parking",
+    "nameTh": "อาคารจอดรถ",
+    "nameEn": "Parking",
+    "descTh": "อาคารจอดรถส่วนกลางของโครงการ",
+    "descEn": "The project's central parking building.",
+    "cover": "parking-1.jpg",
+    "buildings": []
+  }
+]

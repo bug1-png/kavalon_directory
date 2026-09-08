@@ -1,0 +1,26 @@
+[
+  {
+    "id": "welcome-2026",
+    "date": "2026-09-01",
+    "category": "ข่าวสาร",
+    "categoryEn": "News",
+    "titleTh": "ยินดีต้อนรับสู่ระบบ Digital Directory ของ KAVALON",
+    "titleEn": "Welcome to the KAVALON Digital Directory",
+    "bodyTh": "นิติบุคคลอาคารชุด KAVALON ขอแนะนำระบบ Digital Directory สำหรับให้ลูกบ้านค้นหาตำแหน่งอาคาร พื้นที่ส่วนกลาง และติดตามประกาศต่างๆ ได้จากหน้าจอทัชสกรีนบริเวณล็อบบี้ทุกอาคาร",
+    "bodyEn": "The KAVALON Juristic Person is pleased to introduce this Digital Directory, letting residents find their building, explore common facilities, and follow announcements from the touchscreen in every lobby.",
+    "pinned": true,
+    "image": null
+  },
+  {
+    "id": "pool-maintenance-sample",
+    "date": "2026-09-05",
+    "category": "ประกาศ",
+    "categoryEn": "Notice",
+    "titleTh": "ตัวอย่าง: ปิดปรับปรุงสระว่ายน้ำ Magic Island",
+    "titleEn": "Sample: Magic Island Pool Maintenance Closure",
+    "bodyTh": "นี่คือตัวอย่างประกาศ กรุณาแก้ไข/ลบ และแทนที่ด้วยประกาศจริงผ่าน Google Sheet ตามคู่มือใน README",
+    "bodyEn": "This is a sample announcement. Please edit or remove it and replace it with real notices via the Google Sheet, as described in the README.",
+    "pinned": false,
+    "image": null
+  }
+]
