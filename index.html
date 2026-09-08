@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>KAVALON Digital Directory</title>
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ============ Attract / idle screen (full-bleed, own topbar/nav) ============ -->
+  <div id="screen-home" class="screen active">
+    <div class="attract" id="attract">
+      <div id="attract-slides"></div>
+      <div class="attract-scrim"></div>
+      <div class="attract-content">
+        <div class="attract-top">
+          <img src="assets/brand/kavalon-logo-white.png" alt="KAVALON" />
+          <div class="attract-building-badge">
+            <span data-th="อาคาร" data-en="Building"></span>&nbsp;<span id="attract-building-id">A</span>
+          </div>
+          <div class="attract-clock" id="attract-clock"></div>
+        </div>
+        <div class="attract-middle">
+          <div class="attract-title" data-th="Digital Directory" data-en="Digital Directory">Digital Directory</div>
+          <div class="attract-subtitle" data-th="แผนที่โครงการ พื้นที่ส่วนกลาง และประกาศข่าวสารจากนิติบุคคล" data-en="Site map, common facilities, and announcements from the juristic office"></div>
+        </div>
+        <div class="attract-cta" id="attract-cta">
+          <div class="tap-pulse">👆</div>
+          <div class="attract-cta-label" data-th="แตะหน้าจอเพื่อเริ่มต้น" data-en="Tap the screen to begin"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ Main app chrome (topbar + nav), used by all other screens ============ -->
+  <div class="topbar" id="topbar" style="display:none;">
+    <img class="topbar-logo" id="topbar-logo" src="assets/brand/kavalon-logo-blue.png" alt="KAVALON" />
+    <div class="topbar-building">
+      <div class="b-label" data-th="อาคารปัจจุบัน" data-en="Current building"></div>
+      <div class="b-value" id="topbar-building-value">A</div>
+    </div>
+    <div class="topbar-right">
+      <div class="clock">
+        <div class="time" id="topbar-time">--:--</div>
+        <div class="date" id="topbar-date">-</div>
+      </div>
+      <div class="lang-toggle">
+        <button data-lang="th" id="lang-th">ไทย</button>
+        <button data-lang="en" id="lang-en">EN</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="screen-dashboard" class="screen">
+    <div class="screen-pad" style="padding:0 0 40px;">
+      <div class="home-hero" id="dashboard-hero">
+        <div class="home-hero-text">
+          <div class="h-eyebrow" data-th="กำลังใช้งานที่" data-en="You are viewing from"></div>
+          <div class="h-title"><span data-th="อาคาร" data-en="Building"></span> <span id="dashboard-building">A</span></div>
+        </div>
+      </div>
+      <div class="quick-grid">
+        <div class="quick-card" data-goto="map">
+          <div class="icon">🗺️</div>
+          <div class="label" data-th="แผนที่โครงการ" data-en="Site Map"></div>
+          <div class="desc" data-th="ดูตำแหน่งอาคารและโซนต่างๆ" data-en="Explore buildings and zones"></div>
+        </div>
+        <div class="quick-card" data-goto="facilities">
+          <div class="icon">🏝️</div>
+          <div class="label" data-th="พื้นที่ส่วนกลาง" data-en="Facilities"></div>
+          <div class="desc" data-th="ค้นหาสิ่งอำนวยความสะดวก" data-en="Browse all common areas"></div>
+        </div>
+        <div class="quick-card" data-goto="news">
+          <div class="icon">📣</div>
+          <div class="label" data-th="ประกาศ/ข่าวสาร" data-en="Announcements"></div>
+          <div class="desc" data-th="ข่าวสารล่าสุดจากนิติบุคคล" data-en="Latest news from the juristic office"></div>
+        </div>
+        <div class="quick-card" data-goto="facilities" data-zone-filter="__mybuilding">
+          <div class="icon">📍</div>
+          <div class="label" data-th="ส่วนกลางอาคารนี้" data-en="This Building's Amenities"></div>
+          <div class="desc" data-th="เฉพาะอาคารที่คุณอยู่" data-en="Just for your building"></div>
+        </div>
+      </div>
+      <div class="home-news">
+        <div class="section-title" style="margin-bottom:10px;">
+          <span data-th="ข่าวล่าสุด" data-en="Latest News"></span>
+          <span class="see-all" data-goto="news" data-th="ดูทั้งหมด" data-en="See all"></span>
+        </div>
+        <div id="dashboard-news-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="screen-map" class="screen">
+    <div class="screen-pad">
+      <div class="section-title" data-th="แผนที่โครงการ" data-en="Site Map"></div>
+      <div class="section-sub" data-th="แตะหมุดเพื่อดูอาคารหรือโซนกิจกรรม" data-en="Tap a pin to explore a building or activity zone"></div>
+    </div>
+    <div class="map-wrap" id="map-wrap">
+      <img src="assets/images/ground-map.jpg" alt="KAVALON site map" />
+      <div id="map-pins"></div>
+    </div>
+    <div class="map-legend">
+      <div class="li"><span class="sw" style="background:#1fa15a"></span><span data-th="อาคารของคุณ" data-en="Your building"></span></div>
+      <div class="li"><span class="sw" style="background:#173ab8"></span><span data-th="อาคารพักอาศัย" data-en="Residential building"></span></div>
+      <div class="li"><span class="sw" style="background:#d7a94f"></span><span data-th="โซนกิจกรรม" data-en="Activity zone"></span></div>
+    </div>
+  </div>
+
+  <div id="screen-facilities" class="screen">
+    <div class="screen-pad" style="padding-bottom:0;">
+      <div class="section-title" data-th="พื้นที่ส่วนกลาง" data-en="Common Facilities"></div>
+      <div class="chip-row" id="facility-filter-chips"></div>
+    </div>
+    <div class="facility-grid" id="facility-grid"></div>
+  </div>
+
+  <div id="screen-facility-detail" class="screen">
+    <div class="detail-back" data-goto="facilities">‹ <span data-th="ย้อนกลับ" data-en="Back"></span></div>
+    <div class="gallery" id="facility-gallery">
+      <button class="gallery-nav prev" id="fd-prev">‹</button>
+      <button class="gallery-nav next" id="fd-next">›</button>
+      <div class="gallery-dots" id="fd-dots"></div>
+    </div>
+    <div class="detail-body">
+      <div class="detail-title" id="fd-title"></div>
+      <div class="detail-tags" id="fd-tags"></div>
+      <div class="detail-desc" id="fd-desc"></div>
+    </div>
+  </div>
+
+  <div id="screen-news" class="screen">
+    <div class="screen-pad" style="padding-bottom:0;">
+      <div class="section-title" data-th="ประกาศ/ข่าวสาร" data-en="Announcements &amp; News"></div>
+    </div>
+    <div class="announce-list" id="announce-list"></div>
+  </div>
+
+  <div id="screen-news-detail" class="screen">
+    <div class="detail-back" data-goto="news">‹ <span data-th="ย้อนกลับ" data-en="Back"></span></div>
+    <div class="detail-body">
+      <div class="detail-tags" id="nd-tags"></div>
+      <div class="detail-title" id="nd-title"></div>
+      <div class="section-sub" id="nd-date" style="margin-top:8px;"></div>
+      <div class="detail-desc" id="nd-body" style="margin-top:14px;"></div>
+    </div>
+  </div>
+
+  <div id="screen-settings" class="screen">
+    <div class="settings-box" id="settings-pin-box">
+      <div class="section-title" style="margin:0 0 4px;" data-th="ตั้งค่า" data-en="Settings"></div>
+      <div class="section-sub" style="margin:0 0 10px;" data-th="กรุณาใส่รหัส PIN" data-en="Enter the settings PIN"></div>
+      <div class="pin-dots" id="pin-dots"></div>
+      <div class="settings-error" id="pin-error"></div>
+      <div class="keypad" id="pin-keypad"></div>
+    </div>
+    <div class="settings-box" id="settings-config-box" style="display:none;">
+      <div class="section-title" style="margin:0 0 4px;" data-th="เลือกอาคารของจอนี้" data-en="Select this screen's building"></div>
+      <div class="section-sub" style="margin:0;" data-th="ตั้งค่านี้ควรทำครั้งเดียวต่อจอ" data-en="This only needs to be set once per screen"></div>
+      <div class="building-select-grid" id="building-select-grid"></div>
+      <div class="settings-note" data-th="แตะโลโก้ 5 ครั้งบนหน้าหลักเพื่อกลับมาที่นี่อีกครั้ง" data-en="Tap the logo 5 times on the Home screen to return here"></div>
+    </div>
+  </div>
+
+  <div class="bottom-nav" id="bottom-nav" style="display:none;">
+    <button class="nav-btn" data-goto="dashboard"><span class="icon">🏠</span><span data-th="หน้าหลัก" data-en="Home"></span></button>
+    <button class="nav-btn" data-goto="map"><span class="icon">🗺️</span><span data-th="แผนที่" data-en="Map"></span></button>
+    <button class="nav-btn" data-goto="facilities"><span class="icon">🏝️</span><span data-th="ส่วนกลาง" data-en="Facilities"></span></button>
+    <button class="nav-btn" data-goto="news"><span class="icon">📣</span><span data-th="ข่าวสาร" data-en="News"></span></button>
+  </div>
+
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
