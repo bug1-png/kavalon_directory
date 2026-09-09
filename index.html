@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title>KAVALON Digital Directory</title>
+<title>KAVALON Directory</title>
 <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
@@ -28,7 +28,7 @@
           <div class="attract-clock" id="attract-clock"></div>
         </div>
         <div class="attract-middle">
-          <div class="attract-title" data-th="Digital Directory" data-en="Digital Directory">Digital Directory</div>
+          <div class="attract-title" data-th="Kavalon Directory" data-en="Kavalon Directory">Kavalon Directory</div>
           <div class="attract-subtitle" data-th="แผนที่โครงการ พื้นที่ส่วนกลาง และประกาศข่าวสารจากนิติบุคคล" data-en="Site map, common facilities, and announcements from the juristic office"></div>
         </div>
         <div class="attract-cta" id="attract-cta">
@@ -132,6 +132,16 @@
           </div>
           <div class="qc-arrow">›</div>
         </div>
+        <div class="quick-card grad-crimson wide" data-goto="emergency">
+          <div class="qc-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg>
+          </div>
+          <div class="qc-text">
+            <div class="label" data-th="ฉุกเฉิน" data-en="Emergency"></div>
+            <div class="desc" data-th="เบอร์ด่วน จุดรวมพล" data-en="Hotlines & assembly point"></div>
+          </div>
+          <div class="qc-arrow">›</div>
+        </div>
       </div>
       <div class="home-news">
         <div class="section-title" style="margin-bottom:10px;">
@@ -148,6 +158,10 @@
           <div class="pf-stat"><div class="n" id="pf-stat-zones">5</div><div class="l" data-th="โซน" data-en="Zones"></div></div>
           <div class="pf-stat"><div class="n">60+</div><div class="l" data-th="พื้นที่ส่วนกลาง" data-en="Facilities"></div></div>
         </div>
+        <button class="pf-qr-btn" id="open-qr">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><line x1="14" y1="14" x2="14" y2="21"></line><line x1="21" y1="14" x2="21" y2="21"></line><line x1="14" y1="17.5" x2="21" y2="17.5"></line></svg>
+          <span data-th="สแกนดูต่อบนมือถือ" data-en="Scan to view on your phone"></span>
+        </button>
         <div class="pf-brand">KAVALON</div>
       </div>
     </div>
@@ -173,7 +187,7 @@
       <div class="map-hint">↔️ <span data-th="ลากเพื่อเลื่อนดูแผนที่" data-en="Drag to scroll the map"></span></div>
       <div class="zoom-controls">
         <button id="zoom-out" aria-label="Zoom out">−</button>
-        <span class="zoom-level" id="zoom-level">150%</span>
+        <span class="zoom-level" id="zoom-level">100%</span>
         <button id="zoom-in" aria-label="Zoom in">+</button>
       </div>
     </div>
@@ -285,6 +299,55 @@
     </div>
   </div>
 
+  <div id="screen-emergency" class="screen">
+    <div class="detail-back" data-goto="dashboard">‹ <span data-th="ย้อนกลับ" data-en="Back"></span></div>
+    <div class="screen-pad" style="padding-top:8px;">
+      <div class="section-title" data-th="ฉุกเฉิน" data-en="Emergency"></div>
+      <div class="section-sub" data-th="เบอร์ด่วนระดับประเทศ ใช้ได้ทันทีทุกกรณีฉุกเฉิน" data-en="National hotlines — available for any emergency"></div>
+      <div class="contact-list">
+        <a class="contact-row" href="tel:191">
+          <div class="c-icon emergency"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z"></path></svg></div>
+          <div class="c-text">
+            <div class="c-label" data-th="ตำรวจ" data-en="Police"></div>
+            <div class="c-value">191</div>
+          </div>
+        </a>
+        <a class="contact-row" href="tel:199">
+          <div class="c-icon emergency"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 17a2.5 2.5 0 0 0 2.5-2.5c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7.5 7.5 0 1 1-15 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg></div>
+          <div class="c-text">
+            <div class="c-label" data-th="ดับเพลิง" data-en="Fire"></div>
+            <div class="c-value">199</div>
+          </div>
+        </a>
+        <a class="contact-row" href="tel:1669">
+          <div class="c-icon emergency"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7z"></path></svg></div>
+          <div class="c-text">
+            <div class="c-label" data-th="การแพทย์ฉุกเฉิน" data-en="Medical Emergency (EMS)"></div>
+            <div class="c-value">1669</div>
+          </div>
+        </a>
+      </div>
+      <div class="section-sub" style="margin-top:26px;" data-th="ข้อมูลเฉพาะโครงการ" data-en="Project-specific"></div>
+      <div class="contact-list">
+        <div class="contact-row">
+          <div class="c-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></div>
+          <div class="c-text">
+            <div class="c-label" data-th="รปภ. / ส่วนกลางฉุกเฉิน" data-en="Security guard hotline"></div>
+            <div class="c-value" data-th="รอข้อมูลจากนิติบุคคล" data-en="Pending from the juristic office"></div>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="c-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></div>
+          <div class="c-text">
+            <div class="c-label" data-th="จุดรวมพล" data-en="Assembly point"></div>
+            <div class="c-value" data-th="รอข้อมูลจากนิติบุคคล" data-en="Pending from the juristic office"></div>
+          </div>
+        </div>
+      </div>
+      <div class="settings-note" style="text-align:left; padding:0 4px;" data-th="* เบอร์ รปภ. และจุดรวมพลจะอัปเดตเมื่อนิติบุคคลให้รายละเอียดจริง" data-en="* The security hotline and assembly point will update once the juristic office provides them."></div>
+    </div>
+  </div>
+
   <div id="screen-settings" class="screen">
     <div class="settings-box" id="settings-pin-box">
       <div class="section-title" style="margin:0 0 4px;" data-th="ตั้งค่า" data-en="Settings"></div>
@@ -298,6 +361,7 @@
       <div class="section-sub" style="margin:0;" data-th="ตั้งค่านี้ควรทำครั้งเดียวต่อจอ" data-en="This only needs to be set once per screen"></div>
       <div class="building-select-grid" id="building-select-grid"></div>
       <button class="location-btn" id="open-calibrate" style="width:100%; margin-top:20px;" data-th="🛠 ปรับตำแหน่งหมุดบนแผนที่" data-en="🛠 Calibrate map pin positions"></button>
+      <div class="diag-box" id="diag-box"></div>
       <div class="settings-note" data-th="แตะโลโก้ 5 ครั้งบนหน้าหลักเพื่อกลับมาที่นี่อีกครั้ง" data-en="Tap the logo 5 times on the Home screen to return here"></div>
     </div>
   </div>
@@ -321,8 +385,18 @@
     </button>
   </div>
 
+  <div class="qr-modal-overlay" id="qr-modal" style="display:none;">
+    <div class="qr-modal-card">
+      <div class="qr-modal-title" data-th="สแกนดูต่อบนมือถือของคุณ" data-en="Scan to view on your own phone"></div>
+      <canvas id="qr-canvas" width="220" height="220"></canvas>
+      <div class="qr-modal-url" id="qr-modal-url"></div>
+      <button class="qr-modal-close" id="qr-modal-close" data-th="ปิด" data-en="Close"></button>
+    </div>
+  </div>
+
 </div>
 
+<script src="js/vendor/qrcode.min.js"></script>
 <script src="js/config.js"></script>
 <script src="js/data.js"></script>
 <script src="js/app.js"></script>

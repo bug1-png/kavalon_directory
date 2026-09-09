@@ -50,10 +50,12 @@ html, body {
   -webkit-user-select: none;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  overscroll-behavior: none;
 }
 
 button { font-family: inherit; }
-img { -webkit-user-drag: none; }
+img { -webkit-user-drag: none; -webkit-touch-callout: none; }
 
 /* The kiosk is a vertical/portrait TV (typically ~1080px wide at most).
    Capping #app's width keeps it looking like a real kiosk screen when
@@ -64,7 +66,14 @@ img { -webkit-user-drag: none; }
   position: relative;
   width: 100%;
   max-width: 720px;
+  /* iOS/Android browser chrome (address bar, bottom toolbar) can show or
+     hide as the page is used; 100vh there measures the LARGEST possible
+     viewport, so a bottom-anchored element like .bottom-nav or the attract
+     screen's CTA can end up hidden behind that chrome. 100dvh tracks the
+     browser's actual visible area instead. Keep 100vh first as a fallback
+     for older browsers that don't understand dvh at all. */
   height: 100vh;
+  height: 100dvh;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -436,6 +445,14 @@ img { -webkit-user-drag: none; }
 .quick-card .desc { font-size: 11.5px; color: rgba(255, 255, 255, 0.85); margin-top: 3px; }
 .quick-card .qc-arrow { position: absolute; top: 12px; right: 14px; font-size: 20px; font-weight: 700; opacity: 0.75; }
 .quick-card:active { filter: brightness(0.92); }
+.quick-card.wide {
+  grid-column: 1 / -1;
+  flex-direction: row;
+  align-items: center;
+  min-height: 0;
+}
+.quick-card.wide .qc-text { width: auto; }
+.quick-card.wide .qc-arrow { position: static; margin-left: auto; }
 
 .home-news {
   padding: 12px 28px 32px;
@@ -494,6 +511,58 @@ img { -webkit-user-drag: none; }
 .project-footer .pf-stat .n { font-size: 24px; font-weight: 700; background: linear-gradient(135deg, var(--brand-light), var(--accent-teal)); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .project-footer .pf-stat .l { font-size: 11px; color: var(--ink-soft); margin-top: 2px; }
 .project-footer .pf-brand { margin-top: 18px; font-size: 12px; letter-spacing: .25em; color: rgba(255,255,255,0.25); font-weight: 700; }
+.pf-qr-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(139, 172, 255, 0.4);
+  background: rgba(74, 118, 255, 0.12);
+  color: var(--brand-light);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.pf-qr-btn svg { width: 16px; height: 16px; }
+.pf-qr-btn:active { background: rgba(74, 118, 255, 0.22); }
+
+/* ---------------- QR "view on your phone" modal ---------------- */
+.qr-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 24px;
+}
+.qr-modal-card {
+  background: var(--paper-alt);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  text-align: center;
+  max-width: 320px;
+  width: 100%;
+}
+.qr-modal-title { font-size: 16px; font-weight: 700; color: var(--ink); margin-bottom: 18px; }
+.qr-modal-card canvas { background: #fff; border-radius: var(--radius-sm); padding: 10px; }
+.qr-modal-url { font-size: 12px; color: var(--ink-soft); margin-top: 14px; word-break: break-all; }
+.qr-modal-close {
+  margin-top: 20px;
+  width: 100%;
+  padding: 12px 0;
+  border-radius: 999px;
+  border: none;
+  background: var(--brand);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
 
 /* ---------------- Simple placeholder / contact screens ---------------- */
 .placeholder-card {
@@ -516,7 +585,7 @@ img { -webkit-user-drag: none; }
 .placeholder-card .ph-title { font-size: 17px; font-weight: 700; color: var(--ink); }
 .placeholder-card .ph-desc { font-size: 13.5px; color: var(--ink-soft); margin-top: 8px; line-height: 1.5; }
 
-.contact-list { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+.contact-list { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
 .contact-row {
   display: flex;
   align-items: center;
@@ -525,7 +594,11 @@ img { -webkit-user-drag: none; }
   border-radius: var(--radius-md);
   background: var(--paper-alt);
   border: 1px solid var(--line);
+  text-decoration: none;
+  cursor: default;
 }
+a.contact-row { cursor: pointer; }
+a.contact-row:active { background: var(--paper); }
 .contact-row .c-icon {
   flex: 0 0 auto;
   width: 40px; height: 40px;
@@ -534,9 +607,11 @@ img { -webkit-user-drag: none; }
   color: var(--brand-light);
   display: flex; align-items: center; justify-content: center;
 }
+.contact-row .c-icon.emergency { background: rgba(239, 71, 111, 0.16); color: var(--accent-red); }
 .contact-row .c-icon svg { width: 20px; height: 20px; }
 .contact-row .c-label { font-size: 12.5px; color: var(--ink-soft); }
 .contact-row .c-value { font-size: 15px; font-weight: 700; color: var(--ink); margin-top: 2px; }
+.quick-card.grad-crimson { background: linear-gradient(135deg, #dc2626, #7c2d12); box-shadow: 0 10px 24px -8px rgba(220, 38, 38, 0.55); }
 
 /* ---------------- Zone chips / filters ---------------- */
 .chip-row {
@@ -650,11 +725,11 @@ img { -webkit-user-drag: none; }
   overflow-x: auto;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
-  padding: 60px 0 20px;
+  padding: 44px 0 16px;
 }
 .map-wrap {
   position: relative;
-  width: 150%;
+  width: 100%;
   min-width: 100%;
   transition: width 0.25s ease;
 }
@@ -669,30 +744,30 @@ img { -webkit-user-drag: none; }
   z-index: 1;
 }
 .map-pin .dot {
-  width: 40px; height: 40px;
+  width: 28px; height: 28px;
   border-radius: 50% 50% 50% 0;
   background: var(--brand);
-  border: 3px solid #fff;
+  border: 2px solid #fff;
   box-shadow: 0 3px 10px rgba(20,30,80,.35);
   transform: rotate(-45deg);
   display: flex; align-items: center; justify-content: center;
 }
-.map-pin .dot span { transform: rotate(45deg); color: #fff; font-weight: 700; font-size: 15px; }
-.map-pin.zone .dot { background: var(--accent); width: 34px; height: 34px; }
+.map-pin .dot span { transform: rotate(45deg); color: #fff; font-weight: 700; font-size: 10.5px; }
+.map-pin.zone .dot { background: var(--accent); width: 22px; height: 22px; }
 .map-pin.here .dot { background: #1fa15a; }
 .map-pin .pin-label {
-  margin-top: 4px;
+  margin-top: 3px;
   background: rgba(255,255,255,.95);
-  border-radius: 8px;
-  padding: 2px 8px;
-  font-size: 12px;
+  border-radius: 6px;
+  padding: 1px 6px;
+  font-size: 9.5px;
   font-weight: 700;
   color: var(--ink-fixed-dark);
   box-shadow: 0 2px 6px rgba(0,0,0,.35);
   white-space: nowrap;
 }
 .map-pin.highlight-ping .dot {
-  animation: pin-ping 1s ease 3;
+  animation: pin-ping 1.2s ease infinite;
 }
 @keyframes pin-ping {
   0% { box-shadow: 0 0 0 0 rgba(244,187,63,.8); }
@@ -893,6 +968,13 @@ img { -webkit-user-drag: none; }
 }
 .building-select-grid button.selected { border-color: var(--brand); color: var(--brand-light); background: rgba(74, 118, 255, 0.16); }
 .settings-note { font-size: 13px; color: var(--ink-soft); margin-top: 18px; }
+.diag-box { margin-top: 18px; border-top: 1px solid var(--line); padding-top: 14px; text-align: left; display: flex; flex-direction: column; gap: 8px; }
+.diag-row { display: flex; flex-direction: column; gap: 2px; font-size: 12.5px; }
+.diag-label { color: var(--ink-soft); }
+.diag-status { font-weight: 700; }
+.diag-status.diag-sheet { color: var(--accent-green); }
+.diag-status.diag-fallback { color: var(--accent); }
+.diag-status.diag-not-configured { color: var(--ink-soft); }
 .settings-error { color: var(--danger); font-size: 14px; height: 18px; }
 
 /* ---------------- Scrollbars (kiosk touch, keep hidden) ---------------- */

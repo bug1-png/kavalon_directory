@@ -21,7 +21,7 @@
     idleTimer: null,
     attractTimer: null,
     attractIndex: 0,
-    mapZoomIndex: 1,
+    mapZoomIndex: 0,
     mapHasCentered: false,
     calibrateMode: false,
   };
@@ -388,8 +388,8 @@
     });
     state.mapHasCentered = true;
     if (opts.highlight) {
+      $all(".map-pin.highlight-ping").forEach((el) => el.classList.remove("highlight-ping"));
       pinEl.classList.add("highlight-ping");
-      setTimeout(() => pinEl.classList.remove("highlight-ping"), 3200);
     }
   }
 
@@ -527,11 +527,21 @@
   // ---------------------------------------------------------------
   // Announcements
   // ---------------------------------------------------------------
+  function isAnnouncementExpired(a) {
+    if (!a.validUntil) return false;
+    const until = new Date(a.validUntil);
+    if (isNaN(until)) return false;
+    // Treat validUntil as "valid through this whole day".
+    until.setHours(23, 59, 59, 999);
+    return until.getTime() < Date.now();
+  }
   function sortedAnnouncements() {
-    return state.announcements.slice().sort((a, b) => {
-      if (!!a.pinned !== !!b.pinned) return a.pinned ? -1 : 1;
-      return (b.date || "").localeCompare(a.date || "");
-    });
+    return state.announcements
+      .filter((a) => !isAnnouncementExpired(a))
+      .sort((a, b) => {
+        if (!!a.pinned !== !!b.pinned) return a.pinned ? -1 : 1;
+        return (b.date || "").localeCompare(a.date || "");
+      });
   }
   function formatDateBadge(dateStr) {
     const dt = new Date(dateStr);
@@ -550,7 +560,7 @@
   function renderPinnedBanner() {
     const wrap = $("#dashboard-pinned-banner");
     if (!wrap) return;
-    const pinned = state.announcements.find((a) => a.pinned);
+    const pinned = state.announcements.find((a) => a.pinned && !isAnnouncementExpired(a));
     if (!pinned) {
       wrap.innerHTML = "";
       return;
@@ -683,6 +693,7 @@
       $("#settings-pin-box").style.display = "none";
       $("#settings-config-box").style.display = "block";
       renderBuildingSelectGrid();
+      renderDiagBox();
     } else {
       $("#pin-error").textContent = t("รหัสไม่ถูกต้อง ลองอีกครั้ง", "Incorrect PIN, try again");
       state.pinBuffer = "";
@@ -705,9 +716,57 @@
       });
     });
   }
+  function renderDiagBox() {
+    const wrap = $("#diag-box");
+    if (!wrap) return;
+    const rows = [
+      ["พื้นที่ส่วนกลาง (Facilities)", KavalonData.status.facilities],
+      ["ประกาศ/ข่าวสาร (Announcements)", KavalonData.status.announcements],
+    ];
+    const labels = {
+      sheet: { th: "✅ เชื่อมต่อ Google Sheet แล้ว", en: "✅ Connected to Google Sheet" },
+      fallback: { th: "⚠️ เชื่อมต่อ Sheet ไม่สำเร็จ กำลังใช้ข้อมูลสำรอง", en: "⚠️ Sheet fetch failed — using bundled fallback data" },
+      "not-configured": { th: "◽ ยังไม่ได้ใส่ลิงก์ Sheet (ใช้ข้อมูลตัวอย่าง)", en: "◽ No Sheet URL set — using bundled sample data" },
+    };
+    wrap.innerHTML = rows
+      .map(
+        ([label, s]) =>
+          `<div class="diag-row"><span class="diag-label">${label}</span><span class="diag-status diag-${s}">${t(labels[s].th, labels[s].en)}</span></div>`
+      )
+      .join("");
+  }
 
   $("#lang-th").addEventListener("click", () => setLang("th"));
   $("#lang-en").addEventListener("click", () => setLang("en"));
+
+  // ---------------------------------------------------------------
+  // "Scan to view on your phone" QR modal
+  // ---------------------------------------------------------------
+  const openQrBtn = $("#open-qr");
+  const qrModal = $("#qr-modal");
+  if (openQrBtn && qrModal) {
+    openQrBtn.addEventListener("click", () => {
+      const url = location.origin + location.pathname;
+      $("#qr-modal-url").textContent = url;
+      qrModal.style.display = "flex";
+      if (window.QRCodeLib) {
+        window.QRCodeLib.toCanvas($("#qr-canvas"), url, { width: 220, margin: 1 }, (err) => {
+          if (err) console.warn("QR render failed", err);
+        });
+      }
+    });
+    $("#qr-modal-close").addEventListener("click", () => {
+      qrModal.style.display = "none";
+    });
+    qrModal.addEventListener("click", (e) => {
+      if (e.target === qrModal) qrModal.style.display = "none";
+    });
+  }
+
+  // Kiosk hardening: this runs on a public touchscreen, so block the
+  // long-press/right-click context menu (e.g. "Save image as...", "Inspect")
+  // that would otherwise let a visitor poke at browser chrome.
+  document.addEventListener("contextmenu", (e) => e.preventDefault());
 
   // ---------------------------------------------------------------
   // Boot

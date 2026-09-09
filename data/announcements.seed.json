@@ -4,11 +4,12 @@
     "date": "2026-09-01",
     "category": "ข่าวสาร",
     "categoryEn": "News",
-    "titleTh": "ยินดีต้อนรับสู่ระบบ Digital Directory ของ KAVALON",
-    "titleEn": "Welcome to the KAVALON Digital Directory",
-    "bodyTh": "นิติบุคคลอาคารชุด KAVALON ขอแนะนำระบบ Digital Directory สำหรับให้ลูกบ้านค้นหาตำแหน่งอาคาร พื้นที่ส่วนกลาง และติดตามประกาศต่างๆ ได้จากหน้าจอทัชสกรีนบริเวณล็อบบี้ทุกอาคาร",
-    "bodyEn": "The KAVALON Juristic Person is pleased to introduce this Digital Directory, letting residents find their building, explore common facilities, and follow announcements from the touchscreen in every lobby.",
+    "titleTh": "ยินดีต้อนรับสู่ KAVALON Directory",
+    "titleEn": "Welcome to KAVALON Directory",
+    "bodyTh": "นิติบุคคลอาคารชุด KAVALON ขอแนะนำ KAVALON Directory สำหรับให้ลูกบ้านค้นหาตำแหน่งอาคาร พื้นที่ส่วนกลาง และติดตามประกาศต่างๆ ได้จากหน้าจอทัชสกรีนบริเวณล็อบบี้ทุกอาคาร",
+    "bodyEn": "The KAVALON Juristic Person is pleased to introduce KAVALON Directory, letting residents find their building, explore common facilities, and follow announcements from the touchscreen in every lobby.",
     "pinned": true,
+    "validUntil": null,
     "image": null
   },
   {
@@ -18,9 +19,10 @@
     "categoryEn": "Notice",
     "titleTh": "ตัวอย่าง: ปิดปรับปรุงสระว่ายน้ำ Magic Island",
     "titleEn": "Sample: Magic Island Pool Maintenance Closure",
-    "bodyTh": "นี่คือตัวอย่างประกาศ กรุณาแก้ไข/ลบ และแทนที่ด้วยประกาศจริงผ่าน Google Sheet ตามคู่มือใน README",
-    "bodyEn": "This is a sample announcement. Please edit or remove it and replace it with real notices via the Google Sheet, as described in the README.",
+    "bodyTh": "นี่คือตัวอย่างประกาศที่มีวันหมดอายุ (validUntil) — พ้นวันนี้ไปแล้วประกาศจะหายไปจากรายการเองอัตโนมัติ กรุณาแก้ไข/ลบ และแทนที่ด้วยประกาศจริงผ่าน Google Sheet ตามคู่มือใน README",
+    "bodyEn": "This is a sample announcement with an expiry date (validUntil) — it will disappear from the list on its own after that date. Please edit or remove it and replace it with real notices via the Google Sheet, as described in the README.",
     "pinned": false,
+    "validUntil": "2026-09-12",
     "image": null
   }
 ]

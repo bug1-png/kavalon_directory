@@ -101,19 +101,30 @@ const KavalonData = (() => {
       bodyTh: r.bodyTh || "",
       bodyEn: r.bodyEn || r.bodyTh || "",
       pinned: truthy(r.pinned),
+      validUntil: r.validUntil || null,
       image: r.image || null,
     };
   }
+
+  // Exposed so the Settings screen can show staff a quick "is the live
+  // Sheet actually connected, or are we silently running on the bundled
+  // fallback data?" diagnostic — separate from the resident-facing UI,
+  // which never needs to know or care which source it came from.
+  const status = { facilities: "not-configured", announcements: "not-configured" };
 
   async function loadFacilities() {
     const url = window.KAVALON_CONFIG?.facilitiesSheetCsvUrl;
     if (url) {
       try {
         const rows = await fetchCsv(url);
-        if (rows.length) return rows.map(normalizeFacilityRow);
+        if (rows.length) {
+          status.facilities = "sheet";
+          return rows.map(normalizeFacilityRow);
+        }
       } catch (err) {
         console.warn("Facilities sheet fetch failed, using bundled seed data.", err);
       }
+      status.facilities = "fallback";
     }
     return fetchJson("data/facilities.seed.json");
   }
@@ -123,10 +134,14 @@ const KavalonData = (() => {
     if (url) {
       try {
         const rows = await fetchCsv(url);
-        if (rows.length) return rows.map(normalizeAnnouncementRow);
+        if (rows.length) {
+          status.announcements = "sheet";
+          return rows.map(normalizeAnnouncementRow);
+        }
       } catch (err) {
         console.warn("Announcements sheet fetch failed, using bundled seed data.", err);
       }
+      status.announcements = "fallback";
     }
     return fetchJson("data/announcements.seed.json");
   }
@@ -139,5 +154,5 @@ const KavalonData = (() => {
     return { buildings, zones };
   }
 
-  return { loadFacilities, loadAnnouncements, loadStructural, parseCsv };
+  return { loadFacilities, loadAnnouncements, loadStructural, parseCsv, status };
 })();
