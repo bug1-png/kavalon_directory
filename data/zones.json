@@ -7,7 +7,7 @@
     "descEn": "The heart of the water gardens — a themed island pool with fitness facilities and silent disco nights.",
     "cover": "zone-magic-island-cover.jpg",
     "buildings": ["D", "E", "F"],
-    "map": { "x": 12, "y": 50 }
+    "map": { "x": 15.3, "y": 55.9 }
   },
   {
     "id": "healing-zone",
@@ -17,7 +17,7 @@
     "descEn": "A relaxation-focused zone with a spa, quiet lounges, and a dedicated thinking space.",
     "cover": "zone-healing-zone-cover.jpg",
     "buildings": ["C", "G"],
-    "map": { "x": 33, "y": 50 }
+    "map": { "x": 37.8, "y": 52.6 }
   },
   {
     "id": "futuristic-world",
@@ -27,7 +27,7 @@
     "descEn": "A gaming and next-gen activity zone — arcade games, laser tag, and VR golf simulation.",
     "cover": "zone-futuristic-world-cover.jpg",
     "buildings": ["G", "H"],
-    "map": { "x": 50, "y": 50 }
+    "map": { "x": 57, "y": 64.3 }
   },
   {
     "id": "theme-park",
@@ -37,7 +37,7 @@
     "descEn": "An entertainment-and-wellness zone with creative studios, a private theater, and a full fitness center.",
     "cover": "zone-theme-park-cover.jpg",
     "buildings": ["B", "H", "I"],
-    "map": { "x": 67, "y": 50 }
+    "map": { "x": 72.3, "y": 51.7 }
   },
   {
     "id": "mix-forest",
@@ -47,7 +47,7 @@
     "descEn": "The project's main arrival zone — a lush garden setting with the Grand Lobby and evening social spots.",
     "cover": "zone-mix-forest-cover.jpg",
     "buildings": ["A", "B"],
-    "map": { "x": 88, "y": 50 }
+    "map": { "x": 87.4, "y": 51.7 }
   },
   {
     "id": "parking",

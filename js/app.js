@@ -21,7 +21,12 @@
     idleTimer: null,
     attractTimer: null,
     attractIndex: 0,
+    mapZoomIndex: 1,
+    mapHasCentered: false,
+    calibrateMode: false,
   };
+
+  const MAP_ZOOM_LEVELS = [100, 150, 200, 260];
 
   // ---------------------------------------------------------------
   // Utilities
@@ -128,6 +133,7 @@
     renderFacilityChips();
     renderFacilityGrid();
     renderDashboardNews();
+    renderPinnedBanner();
     renderAnnouncementList();
     if (state.currentFacility) renderFacilityDetail(state.currentFacility);
     if (state.currentAnnouncement) renderAnnouncementDetail(state.currentAnnouncement);
@@ -156,6 +162,11 @@
       state.facilityFilter = opts.filter;
       renderFacilityChips();
       renderFacilityGrid();
+    }
+    if (screen === "map") {
+      setMapZoom(state.mapZoomIndex);
+      const focusId = opts.centerOn || state.buildingId;
+      setTimeout(() => centerMapOn(focusId, { highlight: !!opts.centerOn }), 60);
     }
     if (isHome) startAttractLoop();
     else stopAttractLoop();
@@ -248,13 +259,138 @@
     });
     wrap.innerHTML = pins.join("");
     $all(".map-pin", wrap).forEach((el) => {
+      const zoneId = el.getAttribute("data-zone");
+      const buildingId = el.getAttribute("data-building");
+      const entity = zoneId ? findZone(zoneId) : findBuilding(buildingId);
+      if (state.calibrateMode) {
+        el.classList.add("calibrating");
+        attachPinDrag(el, entity);
+      }
       el.addEventListener("click", () => {
-        const zoneId = el.getAttribute("data-zone");
-        const buildingId = el.getAttribute("data-building");
+        if (state.calibrateMode) return;
         if (zoneId) goto("facilities", { filter: zoneId });
         else if (buildingId) goto("facilities", { filter: "__building:" + buildingId });
       });
     });
+  }
+
+  function attachPinDrag(el, entity) {
+    el.addEventListener("pointerdown", (e) => {
+      e.preventDefault();
+      el.setPointerCapture(e.pointerId);
+      el.classList.add("dragging");
+      const wrapEl = $("#map-wrap");
+      const move = (ev) => {
+        const rect = wrapEl.getBoundingClientRect();
+        let x = ((ev.clientX - rect.left) / rect.width) * 100;
+        let y = ((ev.clientY - rect.top) / rect.height) * 100;
+        x = Math.max(0, Math.min(100, x));
+        y = Math.max(0, Math.min(100, y));
+        entity.map.x = Math.round(x * 10) / 10;
+        entity.map.y = Math.round(y * 10) / 10;
+        el.style.left = entity.map.x + "%";
+        el.style.top = entity.map.y + "%";
+      };
+      const up = (ev) => {
+        el.classList.remove("dragging");
+        el.removeEventListener("pointermove", move);
+        el.removeEventListener("pointerup", up);
+      };
+      el.addEventListener("pointermove", move);
+      el.addEventListener("pointerup", up);
+    });
+  }
+
+  function exportCalibration() {
+    const buildingsOut = state.buildings.map((b) => ({ id: b.id, map: b.map }));
+    const zonesOut = state.zones.filter((z) => z.map).map((z) => ({ id: z.id, map: z.map }));
+    return (
+      "// buildings.json map values\n" +
+      JSON.stringify(buildingsOut, null, 2) +
+      "\n\n// zones.json map values\n" +
+      JSON.stringify(zonesOut, null, 2)
+    );
+  }
+
+  const openCalibrateBtn = $("#open-calibrate");
+  const calibrateBanner = $("#calibrate-banner");
+  const cbOutput = $("#cb-output");
+  if (openCalibrateBtn) {
+    openCalibrateBtn.addEventListener("click", () => {
+      state.calibrateMode = true;
+      goto("map");
+      if (calibrateBanner) calibrateBanner.style.display = "block";
+      renderMapPins();
+    });
+  }
+  const cbCopyBtn = $("#cb-copy");
+  if (cbCopyBtn) {
+    cbCopyBtn.addEventListener("click", async () => {
+      const text = exportCalibration();
+      cbOutput.value = text;
+      cbOutput.classList.add("show");
+      try {
+        await navigator.clipboard.writeText(text);
+        cbCopyBtn.textContent = t("คัดลอกแล้ว ✓", "Copied ✓");
+      } catch {
+        cbOutput.select();
+        cbCopyBtn.textContent = t("เลือกข้อความด้านล่างแล้ว Copy เอง", "Select the text below and copy");
+      }
+      setTimeout(() => {
+        cbCopyBtn.textContent = t("คัดลอกตำแหน่ง", "Copy positions");
+      }, 2500);
+    });
+  }
+  const cbExitBtn = $("#cb-exit");
+  if (cbExitBtn) {
+    cbExitBtn.addEventListener("click", () => {
+      state.calibrateMode = false;
+      if (calibrateBanner) calibrateBanner.style.display = "none";
+      if (cbOutput) cbOutput.classList.remove("show");
+      renderMapPins();
+    });
+  }
+
+  function setMapZoom(index) {
+    state.mapZoomIndex = Math.max(0, Math.min(MAP_ZOOM_LEVELS.length - 1, index));
+    const pct = MAP_ZOOM_LEVELS[state.mapZoomIndex];
+    const mapWrapEl = $("#map-wrap");
+    if (mapWrapEl) mapWrapEl.style.width = pct + "%";
+    const levelEl = $("#zoom-level");
+    if (levelEl) levelEl.textContent = pct + "%";
+    const outBtn = $("#zoom-out");
+    const inBtn = $("#zoom-in");
+    if (outBtn) outBtn.disabled = state.mapZoomIndex === 0;
+    if (inBtn) inBtn.disabled = state.mapZoomIndex === MAP_ZOOM_LEVELS.length - 1;
+  }
+  const zoomOutBtn = $("#zoom-out");
+  const zoomInBtn = $("#zoom-in");
+  if (zoomOutBtn) zoomOutBtn.addEventListener("click", () => {
+    setMapZoom(state.mapZoomIndex - 1);
+    setTimeout(() => centerMapOn(state.buildingId), 30);
+  });
+  if (zoomInBtn) zoomInBtn.addEventListener("click", () => {
+    setMapZoom(state.mapZoomIndex + 1);
+    setTimeout(() => centerMapOn(state.buildingId), 30);
+  });
+
+  function centerMapOn(id, opts) {
+    opts = opts || {};
+    const scrollEl = $("#map-scroll");
+    if (!scrollEl || !id) return;
+    const pinEl =
+      $(`.map-pin[data-building="${id}"]`) || $(`.map-pin[data-zone="${id}"]`);
+    if (!pinEl) return;
+    const targetLeft = pinEl.offsetLeft - scrollEl.clientWidth / 2;
+    scrollEl.scrollTo({
+      left: Math.max(0, targetLeft),
+      behavior: state.mapHasCentered ? "smooth" : "auto",
+    });
+    state.mapHasCentered = true;
+    if (opts.highlight) {
+      pinEl.classList.add("highlight-ping");
+      setTimeout(() => pinEl.classList.remove("highlight-ping"), 3200);
+    }
   }
 
   // ---------------------------------------------------------------
@@ -358,7 +494,26 @@
       z ? `<div class="tag">${zoneLabel(z)}</div>` : "",
     ].join("");
     $("#fd-desc").textContent = t(f.descTh, f.descEn);
+    $("#fd-location-desc").textContent = locationText(f, b, z);
   }
+  function locationText(f, b, z) {
+    const zoneName = z ? zoneLabel(z) : "";
+    if (b) {
+      return t(
+        `อยู่ที่${buildingLabel(b)}${z ? ` ในโซน${zoneName}` : ""}`,
+        `Located at ${buildingLabel(b)}${z ? `, in the ${zoneName} zone` : ""}`
+      );
+    }
+    if (z) {
+      return t(`เป็นพื้นที่ส่วนกลางในโซน${zoneName} — ${z.descTh}`, `A shared facility in the ${zoneName} zone — ${z.descEn}`);
+    }
+    return t("อยู่ในพื้นที่ส่วนกลางของโครงการ", "Located within the project's common areas.");
+  }
+  $("#fd-view-on-map").addEventListener("click", () => {
+    const f = state.currentFacility;
+    if (!f) return;
+    goto("map", { centerOn: f.building || f.zone });
+  });
   function shiftGallery(delta) {
     const f = state.currentFacility;
     if (!f || !f.images || !f.images.length) return;
@@ -391,6 +546,34 @@
     const list = sortedAnnouncements().slice(0, 3);
     wrap.innerHTML = announceCardsHtml(list);
     bindAnnounceCards(wrap);
+  }
+  function renderPinnedBanner() {
+    const wrap = $("#dashboard-pinned-banner");
+    if (!wrap) return;
+    const pinned = state.announcements.find((a) => a.pinned);
+    if (!pinned) {
+      wrap.innerHTML = "";
+      return;
+    }
+    wrap.innerHTML = `
+      <div class="pinned-banner" data-id="${pinned.id}">
+        <div class="pb-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"></path><path d="M12 17h.01"></path><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path></svg>
+        </div>
+        <div class="pb-text">
+          <div class="pb-eyebrow" data-th="ประกาศสำคัญ" data-en="Important notice"></div>
+          <div class="pb-title">${t(pinned.titleTh, pinned.titleEn)}</div>
+          <div class="pb-excerpt">${t(pinned.bodyTh, pinned.bodyEn)}</div>
+        </div>
+      </div>`;
+    applyStaticTranslations();
+    $(".pinned-banner", wrap).addEventListener("click", () => openAnnouncement(pinned));
+  }
+  function renderFooterStats() {
+    const bEl = $("#pf-stat-buildings");
+    const zEl = $("#pf-stat-zones");
+    if (bEl) bEl.textContent = state.buildings.length;
+    if (zEl) zEl.textContent = state.zones.filter((z) => z.id !== "parking").length;
   }
   function renderAnnouncementList() {
     const wrap = $("#announce-list");
@@ -545,10 +728,12 @@
 
     setLang(state.lang);
     renderBuildingChrome();
+    renderFooterStats();
     renderMapPins();
     renderFacilityChips();
     renderFacilityGrid();
     renderDashboardNews();
+    renderPinnedBanner();
     renderAnnouncementList();
 
     tickClock();
@@ -562,6 +747,7 @@
           state.announcements = await KavalonData.loadAnnouncements();
           renderFacilityGrid();
           renderDashboardNews();
+          renderPinnedBanner();
           renderAnnouncementList();
         } catch (e) {
           console.warn("Background refresh failed", e);

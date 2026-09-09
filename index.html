@@ -15,6 +15,10 @@
     <div class="attract" id="attract">
       <div id="attract-slides"></div>
       <div class="attract-scrim"></div>
+      <div class="hud-corners">
+        <span class="hud-corner tl"></span><span class="hud-corner tr"></span>
+        <span class="hud-corner bl"></span><span class="hud-corner br"></span>
+      </div>
       <div class="attract-content">
         <div class="attract-top">
           <img src="assets/brand/kavalon-logo-white.png" alt="KAVALON" />
@@ -28,7 +32,11 @@
           <div class="attract-subtitle" data-th="แผนที่โครงการ พื้นที่ส่วนกลาง และประกาศข่าวสารจากนิติบุคคล" data-en="Site map, common facilities, and announcements from the juristic office"></div>
         </div>
         <div class="attract-cta" id="attract-cta">
-          <div class="tap-pulse">👆</div>
+          <div class="tap-ring">
+            <div class="tap-pulse">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11.5V6a2 2 0 0 1 4 0v5"></path><path d="M13 6a2 2 0 0 1 4 0v6"></path><path d="M17 8.5a2 2 0 0 1 4 0V14a7 7 0 0 1-7 7h-1a7 7 0 0 1-6-3.4l-2.8-4.7a1.8 1.8 0 0 1 3-2L9 13"></path></svg>
+            </div>
+          </div>
           <div class="attract-cta-label" data-th="แตะหน้าจอเพื่อเริ่มต้น" data-en="Tap the screen to begin"></div>
         </div>
       </div>
@@ -37,7 +45,7 @@
 
   <!-- ============ Main app chrome (topbar + nav), used by all other screens ============ -->
   <div class="topbar" id="topbar" style="display:none;">
-    <img class="topbar-logo" id="topbar-logo" src="assets/brand/kavalon-logo-blue.png" alt="KAVALON" />
+    <img class="topbar-logo" id="topbar-logo" src="assets/brand/kavalon-logo-white.png" alt="KAVALON" />
     <div class="topbar-building">
       <div class="b-label" data-th="อาคารปัจจุบัน" data-en="Current building"></div>
       <div class="b-value" id="topbar-building-value">A</div>
@@ -62,26 +70,67 @@
           <div class="h-title"><span data-th="อาคาร" data-en="Building"></span> <span id="dashboard-building">A</span></div>
         </div>
       </div>
+      <div id="dashboard-pinned-banner"></div>
       <div class="quick-grid">
-        <div class="quick-card" data-goto="map">
-          <div class="icon">🗺️</div>
-          <div class="label" data-th="แผนที่โครงการ" data-en="Site Map"></div>
-          <div class="desc" data-th="ดูตำแหน่งอาคารและโซนต่างๆ" data-en="Explore buildings and zones"></div>
+        <div class="quick-card grad-blue" data-goto="map">
+          <div class="qc-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon><line x1="9" y1="3" x2="9" y2="18"></line><line x1="15" y1="6" x2="15" y2="21"></line></svg>
+          </div>
+          <div class="qc-text">
+            <div class="label" data-th="แผนที่โครงการ" data-en="Site Map"></div>
+            <div class="desc" data-th="ดูตำแหน่งอาคารและโซนต่างๆ" data-en="Explore buildings and zones"></div>
+          </div>
+          <div class="qc-arrow">›</div>
         </div>
-        <div class="quick-card" data-goto="facilities">
-          <div class="icon">🏝️</div>
-          <div class="label" data-th="พื้นที่ส่วนกลาง" data-en="Facilities"></div>
-          <div class="desc" data-th="ค้นหาสิ่งอำนวยความสะดวก" data-en="Browse all common areas"></div>
+        <div class="quick-card grad-purple" data-goto="facilities">
+          <div class="qc-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          </div>
+          <div class="qc-text">
+            <div class="label" data-th="พื้นที่ส่วนกลาง" data-en="Facilities"></div>
+            <div class="desc" data-th="ค้นหาสิ่งอำนวยความสะดวก" data-en="Browse all common areas"></div>
+          </div>
+          <div class="qc-arrow">›</div>
         </div>
-        <div class="quick-card" data-goto="news">
-          <div class="icon">📣</div>
-          <div class="label" data-th="ประกาศ/ข่าวสาร" data-en="Announcements"></div>
-          <div class="desc" data-th="ข่าวสารล่าสุดจากนิติบุคคล" data-en="Latest news from the juristic office"></div>
+        <div class="quick-card grad-gold" data-goto="news">
+          <div class="qc-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          </div>
+          <div class="qc-text">
+            <div class="label" data-th="ประกาศ/ข่าวสาร" data-en="Announcements"></div>
+            <div class="desc" data-th="ข่าวสารล่าสุดจากนิติบุคคล" data-en="Latest news from the juristic office"></div>
+          </div>
+          <div class="qc-arrow">›</div>
         </div>
-        <div class="quick-card" data-goto="facilities" data-zone-filter="__mybuilding">
-          <div class="icon">📍</div>
-          <div class="label" data-th="ส่วนกลางอาคารนี้" data-en="This Building's Amenities"></div>
-          <div class="desc" data-th="เฉพาะอาคารที่คุณอยู่" data-en="Just for your building"></div>
+        <div class="quick-card grad-teal" data-goto="facilities" data-zone-filter="__mybuilding">
+          <div class="qc-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          </div>
+          <div class="qc-text">
+            <div class="label" data-th="ส่วนกลางอาคารนี้" data-en="This Building's Amenities"></div>
+            <div class="desc" data-th="เฉพาะอาคารที่คุณอยู่" data-en="Just for your building"></div>
+          </div>
+          <div class="qc-arrow">›</div>
+        </div>
+        <div class="quick-card grad-indigo" data-goto="shuttle">
+          <div class="qc-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="12" rx="2"></rect><path d="M3 11h18"></path><circle cx="7.5" cy="19" r="1.5"></circle><circle cx="16.5" cy="19" r="1.5"></circle></svg>
+          </div>
+          <div class="qc-text">
+            <div class="label" data-th="ตาราง Shuttle Bus" data-en="Shuttle Bus"></div>
+            <div class="desc" data-th="รอบรถรับส่งประจำวัน" data-en="Daily shuttle schedule"></div>
+          </div>
+          <div class="qc-arrow">›</div>
+        </div>
+        <div class="quick-card grad-rose" data-goto="contact">
+          <div class="qc-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          </div>
+          <div class="qc-text">
+            <div class="label" data-th="ติดต่อนิติบุคคล" data-en="Contact Juristic Office"></div>
+            <div class="desc" data-th="เบอร์โทร อีเมล เวลาทำการ" data-en="Phone, email, office hours"></div>
+          </div>
+          <div class="qc-arrow">›</div>
         </div>
       </div>
       <div class="home-news">
@@ -91,6 +140,16 @@
         </div>
         <div id="dashboard-news-list"></div>
       </div>
+      <div class="project-footer">
+        <div class="pf-tagline" data-th="ครบทุกไลฟ์สไตล์ในที่เดียว" data-en="Every lifestyle, one address"></div>
+        <div class="pf-sub" data-th="พื้นที่ส่วนกลางครบครัน ออกแบบเพื่อชีวิตคนรุ่นใหม่" data-en="Full amenities, designed for modern living"></div>
+        <div class="pf-stats">
+          <div class="pf-stat"><div class="n" id="pf-stat-buildings">9</div><div class="l" data-th="อาคาร" data-en="Buildings"></div></div>
+          <div class="pf-stat"><div class="n" id="pf-stat-zones">5</div><div class="l" data-th="โซน" data-en="Zones"></div></div>
+          <div class="pf-stat"><div class="n">60+</div><div class="l" data-th="พื้นที่ส่วนกลาง" data-en="Facilities"></div></div>
+        </div>
+        <div class="pf-brand">KAVALON</div>
+      </div>
     </div>
   </div>
 
@@ -99,9 +158,30 @@
       <div class="section-title" data-th="แผนที่โครงการ" data-en="Site Map"></div>
       <div class="section-sub" data-th="แตะหมุดเพื่อดูอาคารหรือโซนกิจกรรม" data-en="Tap a pin to explore a building or activity zone"></div>
     </div>
-    <div class="map-wrap" id="map-wrap">
-      <img src="assets/images/ground-map.jpg" alt="KAVALON site map" />
-      <div id="map-pins"></div>
+    <div class="calibrate-banner" id="calibrate-banner" style="display:none;">
+      <div class="cb-text">
+        <strong data-th="โหมดปรับตำแหน่งหมุด" data-en="Pin calibration mode"></strong>
+        <span data-th="ลากหมุดแต่ละอันไปวางให้ตรงตึกจริง แล้วกด “คัดลอกตำแหน่ง” ส่งกลับมาให้ที่แชท" data-en="Drag each pin onto the real building, then tap “Copy positions” and paste the result back in chat"></span>
+      </div>
+      <div class="cb-actions">
+        <button id="cb-copy" data-th="คัดลอกตำแหน่ง" data-en="Copy positions"></button>
+        <button id="cb-exit" class="cb-exit" data-th="ออกจากโหมดนี้" data-en="Exit"></button>
+      </div>
+      <textarea id="cb-output" readonly></textarea>
+    </div>
+    <div class="map-toolbar">
+      <div class="map-hint">↔️ <span data-th="ลากเพื่อเลื่อนดูแผนที่" data-en="Drag to scroll the map"></span></div>
+      <div class="zoom-controls">
+        <button id="zoom-out" aria-label="Zoom out">−</button>
+        <span class="zoom-level" id="zoom-level">150%</span>
+        <button id="zoom-in" aria-label="Zoom in">+</button>
+      </div>
+    </div>
+    <div class="map-scroll" id="map-scroll">
+      <div class="map-wrap" id="map-wrap">
+        <img src="assets/images/ground-map.jpg" alt="KAVALON site map" />
+        <div id="map-pins"></div>
+      </div>
     </div>
     <div class="map-legend">
       <div class="li"><span class="sw" style="background:#1fa15a"></span><span data-th="อาคารของคุณ" data-en="Your building"></span></div>
@@ -129,6 +209,16 @@
       <div class="detail-title" id="fd-title"></div>
       <div class="detail-tags" id="fd-tags"></div>
       <div class="detail-desc" id="fd-desc"></div>
+      <div class="location-card" id="fd-location">
+        <div class="location-text">
+          <div class="location-label">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <span data-th="ตำแหน่งที่ตั้ง" data-en="Location"></span>
+          </div>
+          <div class="location-desc" id="fd-location-desc"></div>
+        </div>
+        <button class="location-btn" id="fd-view-on-map" data-th="ดูบนแผนที่" data-en="View on map"></button>
+      </div>
     </div>
   </div>
 
@@ -149,6 +239,52 @@
     </div>
   </div>
 
+  <div id="screen-shuttle" class="screen">
+    <div class="detail-back" data-goto="dashboard">‹ <span data-th="ย้อนกลับ" data-en="Back"></span></div>
+    <div class="screen-pad" style="padding-top:8px;">
+      <div class="section-title" data-th="ตาราง Shuttle Bus" data-en="Shuttle Bus Schedule"></div>
+      <div class="section-sub" data-th="รอบรถรับส่งภายในโครงการและไปมหาวิทยาลัย" data-en="Shuttle times around the project and to the university"></div>
+      <div class="placeholder-card">
+        <div class="ph-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="12" rx="2"></rect><path d="M3 11h18"></path><circle cx="7.5" cy="19" r="1.5"></circle><circle cx="16.5" cy="19" r="1.5"></circle></svg>
+        </div>
+        <div class="ph-title" data-th="ยังไม่มีตารางเวลาในระบบ" data-en="No schedule published yet"></div>
+        <div class="ph-desc" data-th="นิติบุคคลจะนำรอบเวลารถรับส่งจริงมาแสดงที่นี่เร็วๆ นี้" data-en="The juristic office will publish the real shuttle times here soon."></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="screen-contact" class="screen">
+    <div class="detail-back" data-goto="dashboard">‹ <span data-th="ย้อนกลับ" data-en="Back"></span></div>
+    <div class="screen-pad" style="padding-top:8px;">
+      <div class="section-title" data-th="ติดต่อนิติบุคคล" data-en="Contact the Juristic Office"></div>
+      <div class="contact-list">
+        <div class="contact-row">
+          <div class="c-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></div>
+          <div class="c-text">
+            <div class="c-label" data-th="โทรศัพท์" data-en="Phone"></div>
+            <div class="c-value" data-th="รอข้อมูลจากนิติบุคคล" data-en="Pending from the juristic office"></div>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="c-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z" opacity="0"></path><path d="M22 6 12 13 2 6"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect></svg></div>
+          <div class="c-text">
+            <div class="c-label" data-th="อีเมล" data-en="Email"></div>
+            <div class="c-value" data-th="รอข้อมูลจากนิติบุคคล" data-en="Pending from the juristic office"></div>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="c-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg></div>
+          <div class="c-text">
+            <div class="c-label" data-th="เวลาทำการ" data-en="Office hours"></div>
+            <div class="c-value" data-th="รอข้อมูลจากนิติบุคคล" data-en="Pending from the juristic office"></div>
+          </div>
+        </div>
+      </div>
+      <div class="settings-note" style="text-align:left; padding:0 4px;" data-th="* ข้อมูลติดต่อจะอัปเดตเมื่อนิติบุคคลให้รายละเอียดจริง" data-en="* Contact details will update once the juristic office provides them."></div>
+    </div>
+  </div>
+
   <div id="screen-settings" class="screen">
     <div class="settings-box" id="settings-pin-box">
       <div class="section-title" style="margin:0 0 4px;" data-th="ตั้งค่า" data-en="Settings"></div>
@@ -161,15 +297,28 @@
       <div class="section-title" style="margin:0 0 4px;" data-th="เลือกอาคารของจอนี้" data-en="Select this screen's building"></div>
       <div class="section-sub" style="margin:0;" data-th="ตั้งค่านี้ควรทำครั้งเดียวต่อจอ" data-en="This only needs to be set once per screen"></div>
       <div class="building-select-grid" id="building-select-grid"></div>
+      <button class="location-btn" id="open-calibrate" style="width:100%; margin-top:20px;" data-th="🛠 ปรับตำแหน่งหมุดบนแผนที่" data-en="🛠 Calibrate map pin positions"></button>
       <div class="settings-note" data-th="แตะโลโก้ 5 ครั้งบนหน้าหลักเพื่อกลับมาที่นี่อีกครั้ง" data-en="Tap the logo 5 times on the Home screen to return here"></div>
     </div>
   </div>
 
   <div class="bottom-nav" id="bottom-nav" style="display:none;">
-    <button class="nav-btn" data-goto="dashboard"><span class="icon">🏠</span><span data-th="หน้าหลัก" data-en="Home"></span></button>
-    <button class="nav-btn" data-goto="map"><span class="icon">🗺️</span><span data-th="แผนที่" data-en="Map"></span></button>
-    <button class="nav-btn" data-goto="facilities"><span class="icon">🏝️</span><span data-th="ส่วนกลาง" data-en="Facilities"></span></button>
-    <button class="nav-btn" data-goto="news"><span class="icon">📣</span><span data-th="ข่าวสาร" data-en="News"></span></button>
+    <button class="nav-btn" data-goto="dashboard">
+      <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5"></path><path d="M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"></path></svg></span>
+      <span data-th="หน้าหลัก" data-en="Home"></span>
+    </button>
+    <button class="nav-btn" data-goto="map">
+      <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon><line x1="9" y1="3" x2="9" y2="18"></line><line x1="15" y1="6" x2="15" y2="21"></line></svg></span>
+      <span data-th="แผนที่" data-en="Map"></span>
+    </button>
+    <button class="nav-btn" data-goto="facilities">
+      <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
+      <span data-th="ส่วนกลาง" data-en="Facilities"></span>
+    </button>
+    <button class="nav-btn" data-goto="news">
+      <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg></span>
+      <span data-th="ข่าวสาร" data-en="News"></span>
+    </button>
   </div>
 
 </div>

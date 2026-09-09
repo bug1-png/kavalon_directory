@@ -1,11 +1,11 @@
 [
-  { "id": "D", "nameTh": "อาคาร ดี", "nameEn": "Building D", "zoneId": "magic-island", "map": { "x": 5, "y": 78 } },
-  { "id": "E", "nameTh": "อาคาร อี", "nameEn": "Building E", "zoneId": "magic-island", "map": { "x": 12, "y": 22 } },
-  { "id": "F", "nameTh": "อาคาร เอฟ", "nameEn": "Building F", "zoneId": "magic-island", "map": { "x": 19, "y": 78 } },
-  { "id": "C", "nameTh": "อาคาร ซี", "nameEn": "Building C", "zoneId": "healing-zone", "map": { "x": 30, "y": 22 } },
-  { "id": "G", "nameTh": "อาคาร จี", "nameEn": "Building G", "zoneId": "healing-zone", "map": { "x": 37, "y": 78 } },
-  { "id": "B", "nameTh": "อาคาร บี", "nameEn": "Building B", "zoneId": "theme-park", "map": { "x": 61, "y": 22 } },
-  { "id": "H", "nameTh": "อาคาร เอช", "nameEn": "Building H", "zoneId": "theme-park", "map": { "x": 68, "y": 78 } },
-  { "id": "I", "nameTh": "อาคาร ไอ", "nameEn": "Building I", "zoneId": "theme-park", "map": { "x": 75, "y": 22 } },
-  { "id": "A", "nameTh": "อาคาร เอ", "nameEn": "Building A", "zoneId": "mix-forest", "map": { "x": 93, "y": 22 } }
+  { "id": "D", "nameTh": "อาคาร ดี", "nameEn": "Building D", "zoneId": "magic-island", "map": { "x": 4.1, "y": 84.4 } },
+  { "id": "E", "nameTh": "อาคาร อี", "nameEn": "Building E", "zoneId": "magic-island", "map": { "x": 5, "y": 30.8 } },
+  { "id": "F", "nameTh": "อาคาร เอฟ", "nameEn": "Building F", "zoneId": "magic-island", "map": { "x": 26.3, "y": 28.3 } },
+  { "id": "C", "nameTh": "อาคาร ซี", "nameEn": "Building C", "zoneId": "healing-zone", "map": { "x": 46.1, "y": 85.6 } },
+  { "id": "G", "nameTh": "อาคาร จี", "nameEn": "Building G", "zoneId": "healing-zone", "map": { "x": 45.8, "y": 28.7 } },
+  { "id": "B", "nameTh": "อาคาร บี", "nameEn": "Building B", "zoneId": "theme-park", "map": { "x": 72.1, "y": 86.1 } },
+  { "id": "H", "nameTh": "อาคาร เอช", "nameEn": "Building H", "zoneId": "theme-park", "map": { "x": 65.5, "y": 27.9 } },
+  { "id": "I", "nameTh": "อาคาร ไอ", "nameEn": "Building I", "zoneId": "theme-park", "map": { "x": 83.2, "y": 23.7 } },
+  { "id": "A", "nameTh": "อาคาร เอ", "nameEn": "Building A", "zoneId": "mix-forest", "map": { "x": 91.7, "y": 89 } }
 ]
